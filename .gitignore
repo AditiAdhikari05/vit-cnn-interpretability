@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter / caches
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Datasets (CIFAR-10 downloaded by torchvision)
+data/
+
+# Heavy training outputs
+outputs/models/
+outputs/logs/
+outputs/checkpoints/
+wandb/
+lightning_logs/
+*.ckpt
+
+# Figures — track only the curated demo plots, ignore everything else
+outputs/figures/*
+!outputs/figures/confusion_matrix.png
+!outputs/figures/grad_cam.png
+!outputs/figures/attention_map.png
+
+# Secrets
+.env
+.env.local

@@ -1,0 +1,55 @@
+[project]
+name = "vit-vs-cnn"
+version = "0.1.0"
+description = "ViT vs CNN comparison on CIFAR-10 with Grad-CAM and attention maps"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Aditi Adhikari" }]
+dependencies = [
+    "torch",
+    "torchvision",
+    "pytorch-lightning",
+    "wandb",
+    "matplotlib",
+    "seaborn",
+    "scikit-learn",
+    "grad-cam",
+    "opencv-python",
+    "numpy",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff==0.7.4",
+    "pre-commit==4.0.1",
+    "pytest==8.3.3",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["outputs", "data", ".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # isort
+    "B",        # bugbear
+    "UP",       # pyupgrade
+    "SIM",      # simplify
+]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

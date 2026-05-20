@@ -1,5 +1,8 @@
 # ViT vs CNN on CIFAR-10
 
+[![python](https://img.shields.io/badge/python-3.10%2B-3776AB)](https://www.python.org)
+[![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+
 Side-by-side comparison of a Vision Transformer and a small
 convolutional network on CIFAR-10, with Grad-CAM heatmaps for the CNN
 and attention-rollout maps for the ViT so you can see *what each model

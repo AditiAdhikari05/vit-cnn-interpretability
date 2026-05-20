@@ -1,7 +1,8 @@
+import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import pytorch_lightning as pl
+
 
 class PatchEmbedding(nn.Module):
     def __init__(self, in_channels=3, patch_size=4, emb_size=256, img_size=32):
@@ -10,20 +11,30 @@ class PatchEmbedding(nn.Module):
         self.proj = nn.Conv2d(in_channels, emb_size, kernel_size=patch_size, stride=patch_size)
 
     def forward(self, x):
-        x = self.proj(x)                  # [B, E, H', W']
-        x = x.flatten(2)                  # [B, E, N]
-        x = x.transpose(1, 2)             # [B, N, E]
+        x = self.proj(x)  # [B, E, H', W']
+        x = x.flatten(2)  # [B, E, N]
+        x = x.transpose(1, 2)  # [B, N, E]
         return x
 
+
 class ViTWithAttention(nn.Module):
-    def __init__(self, img_size=32, patch_size=4, in_channels=3, num_classes=10,
-                 emb_size=256, num_layers=8, num_heads=8, dropout=0.1):
+    def __init__(
+        self,
+        img_size=32,
+        patch_size=4,
+        in_channels=3,
+        num_classes=10,
+        emb_size=256,
+        num_layers=8,
+        num_heads=8,
+        dropout=0.1,
+    ):
         super().__init__()
         self.patch_embed = PatchEmbedding(in_channels, patch_size, emb_size, img_size)
-        
+
         self.cls_token = nn.Parameter(torch.randn(1, 1, emb_size))
         self.pos_embed = nn.Parameter(torch.randn(1, self.patch_embed.n_patches + 1, emb_size))
-        
+
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=emb_size, nhead=num_heads, dropout=dropout, batch_first=True
         )
@@ -38,6 +49,7 @@ class ViTWithAttention(nn.Module):
         x = x + self.pos_embed
         x = self.encoder(x)
         return self.head(x[:, 0])
+
 
 class ViTLightningModule(pl.LightningModule):
     def __init__(self, lr=3e-4, **kwargs):

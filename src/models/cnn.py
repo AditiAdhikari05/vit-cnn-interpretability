@@ -1,8 +1,8 @@
+import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import pytorch_lightning as pl
-from sklearn.metrics import accuracy_score
+
 
 class SimpleCNN(pl.LightningModule):
     def __init__(self, lr=0.001, num_classes=10):
@@ -38,7 +38,7 @@ class SimpleCNN(pl.LightningModule):
         loss = F.cross_entropy(logits, y)
         preds = logits.argmax(dim=1)
         acc = (preds == y).float().mean()
-        
+
         self.log("train_loss", loss, prog_bar=True)
         self.log("train_acc", acc, prog_bar=True)
         return loss
@@ -49,7 +49,7 @@ class SimpleCNN(pl.LightningModule):
         loss = F.cross_entropy(logits, y)
         preds = logits.argmax(dim=1)
         acc = (preds == y).float().mean()
-        
+
         self.log("val_loss", loss, prog_bar=True)
         self.log("val_acc", acc, prog_bar=True)
         return loss
